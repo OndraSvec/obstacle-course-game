@@ -226,10 +226,60 @@ const BlockVertical = ({ position = [0, 0, 0], canJump }) => {
   );
 };
 
+const BlockHorizontal = ({ position = [0, 0, 0], canJump }) => {
+  const [offset] = useState(() => Math.random() * Math.PI * 2);
+  const horizontalObstacleRef = useRef(null);
+
+  useFrame((state) => {
+    const { clock } = state;
+
+    const angle = clock.elapsedTime * 0.5;
+    const x = Math.sin(angle * 5 + offset);
+    horizontalObstacleRef.current?.setNextKinematicTranslation({
+      x: position[0] + x,
+      y: 1.5 + position[1],
+      z: position[2],
+    });
+  });
+  return (
+    <group position={position}>
+      <RigidBody
+        type="fixed"
+        onCollisionEnter={() => {
+          canJump.current = true;
+        }}
+      >
+        <mesh
+          geometry={boxGeometry}
+          material={floorMaterial}
+          scale={[4, 0.2, 4]}
+          position-y={-0.1}
+          receiveShadow
+        />
+      </RigidBody>
+      <RigidBody
+        ref={horizontalObstacleRef}
+        type="kinematicPosition"
+        position-y={0.25}
+        restitution={0.2}
+        friction={0}
+      >
+        <mesh
+          geometry={boxGeometry}
+          scale={[2, 3, 0.3]}
+          material={obstacleMaterial}
+          castShadow
+          receiveShadow
+        />
+      </RigidBody>
+    </group>
+  );
+};
+
 const Level = () => {
   return (
     <>
-      <BlockVertical />
+      <BlockHorizontal />
     </>
   );
 };
