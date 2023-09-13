@@ -1,5 +1,7 @@
 import { Text } from "@react-three/drei";
+import { useFrame } from "@react-three/fiber";
 import { CuboidCollider, RigidBody } from "@react-three/rapier";
+import { useRef, useState } from "react";
 import * as THREE from "three";
 
 const boxGeometry = new THREE.BoxGeometry(1, 1, 1);
@@ -50,10 +52,58 @@ const BlockEnd = ({ position = [0, 0, 0] }) => (
   </RigidBody>
 );
 
+const BlockSpinner = ({ position = [0, 0, 0], canJump }) => {
+  const [speed] = useState(
+    () => Math.random() + 2 * (Math.random() < 0.5 ? -1 : 1),
+  );
+  const spinnerRef = useRef(null);
+
+  useFrame((state) => {
+    const { clock } = state;
+    const eulerRotation = new THREE.Euler(0, clock.elapsedTime * 2 * speed, 0);
+    const quaternionRotation = new THREE.Quaternion();
+    quaternionRotation.setFromEuler(eulerRotation);
+    spinnerRef.current?.setNextKinematicRotation(quaternionRotation);
+  });
+  return (
+    <group position={position}>
+      <RigidBody
+        type="fixed"
+        onCollisionEnter={() => {
+          canJump.current = true;
+        }}
+      >
+        <mesh
+          geometry={boxGeometry}
+          material={floorMaterial}
+          scale={[4, 0.2, 4]}
+          position-y={-0.1}
+          receiveShadow
+        />
+      </RigidBody>
+      <RigidBody
+        ref={spinnerRef}
+        type="kinematicPosition"
+        position-y={0.25}
+        restitution={0.2}
+        friction={0}
+      >
+        <mesh
+          geometry={boxGeometry}
+          scale={[4, 0.3, 0.3]}
+          material={obstacleMaterial}
+          castShadow
+          receiveShadow
+        />
+      </RigidBody>
+    </group>
+  );
+};
+
 const Level = () => {
   return (
     <>
-      <BlockEnd />
+      <BlockSpinner />
     </>
   );
 };
