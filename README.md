@@ -1,8 +1,15 @@
-# React + Vite
+# Obstacle Course Game
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a game inspired by the [three.js journey](https://threejs-journey.com/)'s curriculum.
 
-Currently, two official plugins are available:
+It is made using:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- React-three-fiber
+- React-three-rapier
+- Blender
+- Mixamo
+- and Vite
+
+You can check it out below:
+
+[Live preview](https://obstacle-course-game.vercel.app "Obstacle Course Game")
