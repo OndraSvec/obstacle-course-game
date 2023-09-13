@@ -100,10 +100,86 @@ const BlockSpinner = ({ position = [0, 0, 0], canJump }) => {
   );
 };
 
+const BlockDoubleSpinner = ({ position = [0, 0, 0], canJump }) => {
+  const [speed] = useState(
+    () => Math.random() + 2 * (Math.random() < 0.5 ? -1 : 1),
+  );
+  const spinnerRef = useRef(null);
+  const secondSpinnerRef = useRef(null);
+
+  useFrame((state) => {
+    const { clock } = state;
+    const eulerRotationOne = new THREE.Euler(
+      0,
+      clock.elapsedTime * 2 * speed,
+      0,
+    );
+    const eulerRotationTwo = new THREE.Euler(
+      0,
+      clock.elapsedTime * 2 * -speed,
+      0,
+    );
+    const quaternionRotationOne = new THREE.Quaternion();
+    const quaternionRotationTwo = new THREE.Quaternion();
+    quaternionRotationOne.setFromEuler(eulerRotationOne);
+    quaternionRotationTwo.setFromEuler(eulerRotationTwo);
+    spinnerRef.current?.setNextKinematicRotation(quaternionRotationOne);
+    secondSpinnerRef.current?.setNextKinematicRotation(quaternionRotationTwo);
+  });
+  return (
+    <group position={position}>
+      <RigidBody
+        type="fixed"
+        onCollisionEnter={() => {
+          canJump.current = true;
+        }}
+      >
+        <mesh
+          geometry={boxGeometry}
+          material={floorMaterial}
+          scale={[4, 0.2, 4]}
+          position-y={-0.1}
+          receiveShadow
+        />
+      </RigidBody>
+      <RigidBody
+        ref={spinnerRef}
+        type="kinematicPosition"
+        position-y={0.25}
+        restitution={0.2}
+        friction={0}
+      >
+        <mesh
+          geometry={boxGeometry}
+          scale={[4, 0.3, 0.3]}
+          material={obstacleMaterial}
+          castShadow
+          receiveShadow
+        />
+      </RigidBody>
+      <RigidBody
+        ref={secondSpinnerRef}
+        type="kinematicPosition"
+        position-y={0.5}
+        restitution={0.2}
+        friction={0}
+      >
+        <mesh
+          geometry={boxGeometry}
+          scale={[4, 0.3, 0.3]}
+          material={obstacleMaterial}
+          castShadow
+          receiveShadow
+        />
+      </RigidBody>
+    </group>
+  );
+};
+
 const Level = () => {
   return (
     <>
-      <BlockSpinner />
+      <BlockDoubleSpinner />
     </>
   );
 };
