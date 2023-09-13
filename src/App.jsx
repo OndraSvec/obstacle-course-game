@@ -1,6 +1,7 @@
 import { Canvas } from "@react-three/fiber";
 import Experience from "./components/Experience";
-import { KeyboardControls, Loader } from "@react-three/drei";
+import Interface from "./components/Interface";
+import { KeyboardControls, Loader, useProgress } from "@react-three/drei";
 import { Suspense, forwardRef, useEffect, useRef, useState } from "react";
 
 const Wrapper = forwardRef(({ children }, ref) => (
@@ -53,6 +54,8 @@ const App = () => {
     return () => window.removeEventListener("dblclick", handleFullScreen);
   }, []);
 
+  const { progress } = useProgress();
+
   return (
     <Wrapper ref={wrapperRef}>
       <KeyboardControls
@@ -85,6 +88,7 @@ const App = () => {
           }}
           dataStyles={{ color: "black", fontSize: "1rem" }}
         />
+        {progress === 100 && <Interface isMobileDevice={isMobileDevice} />}
       </KeyboardControls>
     </Wrapper>
   );
