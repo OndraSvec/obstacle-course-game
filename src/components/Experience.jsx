@@ -4,6 +4,7 @@ import Level from "./Level";
 import { Physics } from "@react-three/rapier";
 import Lights from "./Ligths";
 import useGameStore from "../useGameStore";
+import Ball from "./Ball";
 
 const Experience = () => {
   const blocksCount = useGameStore((state) => state.blocksCount);
@@ -16,6 +17,7 @@ const Experience = () => {
       <Physics debug>
         <Lights />
         <Level count={blocksCount} seed={blocksSeed} canJump={canJump} />
+        <Ball />
       </Physics>
     </>
   );
