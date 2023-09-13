@@ -446,10 +446,65 @@ const BlockHorizontalSwing = ({ position = [0, 0, 0], canJump }) => {
   );
 };
 
+const BlockVerticalSwing = ({ position = [0, 0, 0], canJump }) => {
+  const [speed] = useState(() => Math.random() + 1);
+
+  const verticalSwingRef = useRef(null);
+
+  useFrame((state) => {
+    const { clock } = state;
+    const eulerRotation = new THREE.Euler(
+      Math.sin(clock.elapsedTime * speed) * 1.75,
+      0,
+      0,
+    );
+
+    const quaternionRotation = new THREE.Quaternion();
+    quaternionRotation.setFromEuler(eulerRotation);
+
+    verticalSwingRef.current?.setNextKinematicRotation(quaternionRotation);
+  });
+  return (
+    <group position={position}>
+      <RigidBody
+        ref={verticalSwingRef}
+        type="kinematicPosition"
+        position={[0, 1.5, 0]}
+        restitution={0.2}
+        friction={0}
+      >
+        <mesh
+          geometry={boxGeometry}
+          scale={[4, 3, 0.3]}
+          material={obstacleMaterial}
+          castShadow
+          receiveShadow
+        />
+      </RigidBody>
+      <RigidBody
+        type="fixed"
+        restitution={0.2}
+        friction={0}
+        onCollisionEnter={() => {
+          canJump.current = true;
+        }}
+      >
+        <mesh
+          geometry={boxGeometry}
+          material={floorMaterial}
+          scale={[4, 0.2, 4]}
+          position-y={-0.1}
+          receiveShadow
+        />
+      </RigidBody>
+    </group>
+  );
+};
+
 const Level = () => {
   return (
     <>
-      <BlockHorizontalSwing />
+      <BlockVerticalSwing />
     </>
   );
 };
