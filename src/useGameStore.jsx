@@ -69,7 +69,7 @@ export default create(
         animationName: "idle",
         setAnimationName: (animationName) => set(() => ({ animationName })),
 
-        character: false,
+        character: true,
         setCharacter: () => set((state) => ({ character: !state.character })),
 
         sound: false,
