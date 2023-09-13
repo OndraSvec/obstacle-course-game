@@ -1,10 +1,16 @@
 import { Canvas } from "@react-three/fiber";
 import Experience from "./components/Experience";
 import { KeyboardControls } from "@react-three/drei";
+import { forwardRef, useRef } from "react";
+
+const Wrapper = forwardRef(({ children }, ref) => (
+  <div ref={ref}>{children}</div>
+));
 
 const App = () => {
+  const wrapperRef = useRef(null);
   return (
-    <>
+    <Wrapper ref={wrapperRef}>
       <KeyboardControls
         map={[
           { name: "forward", keys: ["ArrowUp", "KeyW"] },
@@ -27,7 +33,7 @@ const App = () => {
           <Experience />
         </Canvas>
       </KeyboardControls>
-    </>
+    </Wrapper>
   );
 };
 
