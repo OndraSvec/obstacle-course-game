@@ -6,6 +6,7 @@ import Lights from "./Ligths";
 import useGameStore from "../useGameStore";
 import Ball from "./Ball";
 import Character from "./Character";
+import Sound from "./Sound";
 
 const Experience = () => {
   const blocksCount = useGameStore((state) => state.blocksCount);
@@ -21,6 +22,7 @@ const Experience = () => {
         <Level count={blocksCount} seed={blocksSeed} canJump={canJump} />
         {character ? <Character canJump={canJump} /> : <Ball />}
       </Physics>
+      <Sound />
     </>
   );
 };
