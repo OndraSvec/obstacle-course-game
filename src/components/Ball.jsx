@@ -3,6 +3,7 @@ import { useFrame } from "@react-three/fiber";
 import { RigidBody } from "@react-three/rapier";
 import { useRef, useState } from "react";
 import useGameStore from "../useGameStore";
+import BallControls from "./BallControls";
 
 const Ball = () => {
   const blocksCount = useGameStore((state) => state.blocksCount);
@@ -36,21 +37,24 @@ const Ball = () => {
     ballPosition.y < -5 && restart();
   });
   return (
-    <RigidBody
-      ref={ballRef}
-      canSleep={false}
-      colliders="ball"
-      position-y={1}
-      restitution={0.2}
-      friction={1}
-      linearDamping={0.5}
-      angularDamping={0.5}
-    >
-      <mesh castShadow>
-        <icosahedronGeometry args={[0.3, 1]} />
-        <meshStandardMaterial flatShading color={"#e11d48"} />
-      </mesh>
-    </RigidBody>
+    <>
+      <BallControls ballRef={ballRef} />
+      <RigidBody
+        ref={ballRef}
+        canSleep={false}
+        colliders="ball"
+        position-y={1}
+        restitution={0.2}
+        friction={1}
+        linearDamping={0.5}
+        angularDamping={0.5}
+      >
+        <mesh castShadow>
+          <icosahedronGeometry args={[0.3, 1]} />
+          <meshStandardMaterial flatShading color={"#e11d48"} />
+        </mesh>
+      </RigidBody>
+    </>
   );
 };
 
