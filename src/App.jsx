@@ -1,7 +1,7 @@
 import { Canvas } from "@react-three/fiber";
 import Experience from "./components/Experience";
-import { KeyboardControls } from "@react-three/drei";
-import { forwardRef, useEffect, useRef, useState } from "react";
+import { KeyboardControls, Loader } from "@react-three/drei";
+import { Suspense, forwardRef, useEffect, useRef, useState } from "react";
 
 const Wrapper = forwardRef(({ children }, ref) => (
   <div ref={ref}>{children}</div>
@@ -74,8 +74,17 @@ const App = () => {
             position: [2.5, 4, 6],
           }}
         >
-          <Experience />
+          <Suspense>
+            <Experience />
+          </Suspense>
         </Canvas>
+        <Loader
+          containerStyles={{ background: "white" }}
+          barStyles={{
+            background: "white",
+          }}
+          dataStyles={{ color: "black", fontSize: "1rem" }}
+        />
       </KeyboardControls>
     </Wrapper>
   );
