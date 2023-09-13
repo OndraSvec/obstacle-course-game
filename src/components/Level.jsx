@@ -312,10 +312,89 @@ const BlockRotating = ({ position = [0, 0, 0], canJump }) => {
   );
 };
 
+const BlockGate = ({ position = [0, 0, 0], canJump }) => {
+  const [speed] = useState(() => Math.random() + 1);
+
+  const leftGateRef = useRef(null);
+  const rightGateRef = useRef(null);
+
+  useFrame((state) => {
+    const { clock } = state;
+    const eulerRotation1 = new THREE.Euler(
+      0,
+      Math.sin(clock.elapsedTime * speed) * 1.5,
+      0,
+    );
+    const eulerRotation2 = new THREE.Euler(
+      0,
+      -Math.sin(clock.elapsedTime * speed) * 1.5,
+      0,
+    );
+    const quaternionRotation1 = new THREE.Quaternion();
+    quaternionRotation1.setFromEuler(eulerRotation1);
+
+    const quaternionRotation2 = new THREE.Quaternion();
+    quaternionRotation2.setFromEuler(eulerRotation2);
+
+    leftGateRef.current?.setNextKinematicRotation(quaternionRotation1);
+    rightGateRef.current?.setNextKinematicRotation(quaternionRotation2);
+  });
+  return (
+    <group position={position}>
+      <RigidBody
+        ref={leftGateRef}
+        type="kinematicPosition"
+        position={[-2, 1.5, 0]}
+        restitution={0.2}
+        friction={0}
+      >
+        <mesh
+          geometry={boxGeometry}
+          scale={[4, 3, 0.3]}
+          material={obstacleMaterial}
+          castShadow
+          receiveShadow
+        />
+      </RigidBody>
+      <RigidBody
+        ref={rightGateRef}
+        type="kinematicPosition"
+        position={[2, 1.5, 0]}
+        restitution={0.2}
+        friction={0}
+      >
+        <mesh
+          geometry={boxGeometry}
+          scale={[4, 3, 0.3]}
+          material={obstacleMaterial}
+          castShadow
+          receiveShadow
+        />
+      </RigidBody>
+      <RigidBody
+        type="fixed"
+        restitution={0.2}
+        friction={0}
+        onCollisionEnter={() => {
+          canJump.current = true;
+        }}
+      >
+        <mesh
+          geometry={boxGeometry}
+          material={floorMaterial}
+          scale={[4, 0.2, 4]}
+          position-y={-0.1}
+          receiveShadow
+        />
+      </RigidBody>
+    </group>
+  );
+};
+
 const Level = () => {
   return (
     <>
-      <BlockRotating />
+      <BlockGate />
     </>
   );
 };
