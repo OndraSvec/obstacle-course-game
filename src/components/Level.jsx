@@ -276,10 +276,46 @@ const BlockHorizontal = ({ position = [0, 0, 0], canJump }) => {
   );
 };
 
+const BlockRotating = ({ position = [0, 0, 0], canJump }) => {
+  const [speed] = useState(
+    () => Math.random() + 1 * (Math.random() < 0.5 ? -1 : 1),
+  );
+  const rotatingRef = useRef(null);
+
+  useFrame((state) => {
+    const { clock } = state;
+    const eulerRotation = new THREE.Euler(0, 0, clock.elapsedTime * speed);
+    const quaternionRotation = new THREE.Quaternion();
+    quaternionRotation.setFromEuler(eulerRotation);
+    rotatingRef.current?.setNextKinematicRotation(quaternionRotation);
+  });
+  return (
+    <group position={position}>
+      <RigidBody
+        ref={rotatingRef}
+        type="kinematicPosition"
+        restitution={0.2}
+        friction={0}
+        onCollisionEnter={() => {
+          canJump.current = true;
+        }}
+      >
+        <mesh
+          geometry={boxGeometry}
+          material={floorMaterial}
+          scale={[4, 0.2, 4]}
+          position-y={-0.1}
+          receiveShadow
+        />
+      </RigidBody>
+    </group>
+  );
+};
+
 const Level = () => {
   return (
     <>
-      <BlockHorizontal />
+      <BlockRotating />
     </>
   );
 };
