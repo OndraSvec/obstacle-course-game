@@ -4,11 +4,18 @@
   padding: 0;
   outline: none;
   border: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  touch-action: none;
 }
 
 html,
 body,
-#root {
+#root,
+#root > div,
+.interface {
   position: fixed;
   top: 0;
   left: 0;
@@ -17,4 +24,112 @@ body,
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+}
+
+.interface {
+  pointer-events: none;
+  font-family: "Bebas Neue", sans-serif;
+}
+
+.info,
+.restart,
+.bottomStrip {
+  text-align: center;
+  width: 100%;
+  color: black;
+  background-color: #ffffff77;
+}
+
+.info {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  padding-block: 5px;
+  padding-inline: 1rem;
+  font-size: min(min(6vw, 3rem), min(6vh, 3rem));
+}
+
+.info > span:first-child {
+  text-align: left;
+}
+.info > span:last-child {
+  text-align: right;
+}
+
+.restart {
+  left: 0;
+  position: absolute;
+  top: 40%;
+  pointer-events: auto;
+  cursor: pointer;
+  font-size: min(10vw, 4rem);
+  padding-top: 10px;
+  font-family: "Bebas Neue", sans-serif;
+}
+
+.bottomStrip {
+  display: flex;
+  justify-content: space-between;
+  padding-block: 5px;
+  padding-inline: 1rem;
+}
+
+.bottomStrip > button {
+  background: transparent;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.bottomStrip > button > svg {
+  font-size: min(min(6vw, 2.25rem), min(6vh, 2.25rem));
+  color: black;
+}
+
+.controls {
+  position: absolute;
+  bottom: 10%;
+  left: 0;
+  width: 100%;
+}
+
+.controls .raw {
+  display: flex;
+  justify-content: center;
+}
+
+.controls .key {
+  width: 50px;
+  height: 50px;
+  margin: 4px;
+  padding: 4px;
+  border: 2px solid #ffffff;
+  background: #ffffff44;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.controls .key.large {
+  width: 168px;
+}
+
+.controls .key.active {
+  background: #ffffff99;
+}
+
+.mobileControls {
+  display: grid;
+  height: 100%;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.mobileControls > button {
+  background: rgba(255, 255, 255, 0);
+  pointer-events: auto;
+}
+
+.mobileControls > button:first-child,
+.mobileControls > button:last-child {
+  grid-column: 1 / -1;
 }
