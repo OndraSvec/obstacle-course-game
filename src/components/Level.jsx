@@ -1,7 +1,7 @@
 import { Text } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { CuboidCollider, RigidBody } from "@react-three/rapier";
-import { useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import * as THREE from "three";
 
 const boxGeometry = new THREE.BoxGeometry(1, 1, 1);
@@ -501,12 +501,54 @@ const BlockVerticalSwing = ({ position = [0, 0, 0], canJump }) => {
   );
 };
 
-const Level = () => {
+const Level = ({
+  count = 5,
+  types = [
+    BlockSpinner,
+    BlockDoubleSpinner,
+    BlockHorizontal,
+    BlockVertical,
+    BlockRotating,
+    BlockGate,
+    BlockHorizontalSwing,
+    BlockVerticalSwing,
+  ],
+  seed = 0,
+  canJump,
+}) => {
+  const blocks = useMemo(() => {
+    const blocks = [];
+
+    for (let i = 0; i < count; i++) {
+      const randomIndex = Math.floor(Math.random() * types.length);
+      blocks.push(types[randomIndex]);
+    }
+
+    return blocks;
+  }, [count, types, seed]);
   return (
     <>
-      <BlockVerticalSwing />
+      <BlockStart position={[0, 0, 0]} canJump={canJump} />
+      {blocks.map((Block, index) => (
+        <Block
+          key={`block_${index}`}
+          position={[0, 0, (index + 1) * -4]}
+          canJump={canJump}
+        />
+      ))}
+      <BlockEnd position={[0, 0, (count + 1) * -4]} />
     </>
   );
 };
 
 export default Level;
+export {
+  BlockSpinner,
+  BlockDoubleSpinner,
+  BlockHorizontal,
+  BlockVertical,
+  BlockRotating,
+  BlockGate,
+  BlockHorizontalSwing,
+  BlockVerticalSwing,
+};
