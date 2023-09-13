@@ -4,11 +4,15 @@ import { useFrame } from "@react-three/fiber";
 import { CapsuleCollider, RigidBody } from "@react-three/rapier";
 import { useRef, useState } from "react";
 import useGameStore from "../useGameStore";
+import Animations from "./Animations";
+import CharacterControls from "./CharacterControls";
 
 const Character = ({ canJump }) => {
   const blocksCount = useGameStore((state) => state.blocksCount);
   const restart = useGameStore((state) => state.restart);
   const end = useGameStore((state) => state.end);
+  const animationName = useGameStore((state) => state.animationName);
+  const setAnimationName = useGameStore((state) => state.setAnimationName);
 
   const [lerpedCameraPosition] = useState(() => new THREE.Vector3(0, 10, 10));
   const [lerpedCameraTarget] = useState(() => new THREE.Vector3());
@@ -40,25 +44,42 @@ const Character = ({ canJump }) => {
     playerPosition.y < -5 && restart();
   });
   return (
-    <group>
-      <RigidBody
-        ref={playerRef}
-        canSleep={false}
-        colliders={false}
-        enabledRotations={[false, false, false]}
-        restitution={0.2}
-        friction={0.5}
-        linearDamping={0.5}
-      >
-        <CapsuleCollider args={[0.4, 0.2]} position={[0, 0.55, 0]} />
-        <primitive
-          ref={characterRef}
-          object={player.scene}
-          scale={0.6}
-          rotation-y={Math.PI}
-        />
-      </RigidBody>
-    </group>
+    <>
+      <Animations
+        animationName={animationName}
+        player={player}
+        characterRef={characterRef}
+      />
+      <CharacterControls
+        animationName={animationName}
+        setAnimationName={setAnimationName}
+        playerRef={playerRef}
+        characterRef={characterRef}
+        canJump={canJump}
+      />
+      <group>
+        <RigidBody
+          ref={playerRef}
+          canSleep={false}
+          colliders={false}
+          enabledRotations={[false, false, false]}
+          restitution={0.2}
+          friction={0.5}
+          linearDamping={0.5}
+          onCollisionEnter={() => {
+            setAnimationName("idle");
+          }}
+        >
+          <CapsuleCollider args={[0.4, 0.2]} position={[0, 0.55, 0]} />
+          <primitive
+            ref={characterRef}
+            object={player.scene}
+            scale={0.6}
+            rotation-y={Math.PI}
+          />
+        </RigidBody>
+      </group>
+    </>
   );
 };
 
