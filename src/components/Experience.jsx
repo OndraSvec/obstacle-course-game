@@ -9,7 +9,7 @@ const Experience = () => {
   return (
     <>
       <Sky sunPosition={[0, 3, 2]} />
-      <Physics>
+      <Physics debug>
         <Lights />
         <Level canJump={canJump} />
       </Physics>
