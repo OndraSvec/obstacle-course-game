@@ -1,7 +1,7 @@
 import { Canvas } from "@react-three/fiber";
 import Experience from "./components/Experience";
 import { KeyboardControls } from "@react-three/drei";
-import { forwardRef, useRef } from "react";
+import { forwardRef, useEffect, useRef, useState } from "react";
 
 const Wrapper = forwardRef(({ children }, ref) => (
   <div ref={ref}>{children}</div>
@@ -9,6 +9,50 @@ const Wrapper = forwardRef(({ children }, ref) => (
 
 const App = () => {
   const wrapperRef = useRef(null);
+
+  const [isMobileDevice, setIsMobileDevice] = useState(true);
+
+  const handleFullScreen = () => {
+    const fullscreenElement =
+      document.fullscreenElement || document.webkitFullscreenElement;
+
+    if (!fullscreenElement) {
+      if (wrapperRef.current.requestFullscreen) {
+        wrapperRef.current.requestFullscreen();
+      } else if (wrapperRef.current.webkitRequestFullscreen) {
+        wrapperRef.current.webkitRequestFullscreen();
+      }
+    } else {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      } else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen();
+      }
+    }
+  };
+
+  const getUserDevice = () => {
+    const details = navigator.userAgent;
+
+    const regexp = /android|iphone|kindle|ipad/i;
+
+    const isMobile = regexp.test(details);
+
+    isMobile && setIsMobileDevice(true);
+    !isMobile && setIsMobileDevice(false);
+  };
+
+  useEffect(() => {
+    getUserDevice();
+
+    return () => getUserDevice();
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener("dblclick", handleFullScreen);
+    return () => window.removeEventListener("dblclick", handleFullScreen);
+  }, []);
+
   return (
     <Wrapper ref={wrapperRef}>
       <KeyboardControls
