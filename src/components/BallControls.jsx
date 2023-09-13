@@ -27,7 +27,9 @@ const BallControls = ({ ballRef }) => {
     const ray = new rapier.Ray(origin, direction);
     const hit = world.castRay(ray, 10, true);
 
-    hit.toi < 0.15 && ballRef.current?.applyImpulse({ x: 0, y: 0.5, z: 0 });
+    if (hit) {
+      hit.toi < 0.15 && ballRef.current?.applyImpulse({ x: 0, y: 0.5, z: 0 });
+    }
   };
 
   const reset = () => {
