@@ -5,7 +5,7 @@ import { useMemo, useRef, useState } from "react";
 import * as THREE from "three";
 
 const boxGeometry = new THREE.BoxGeometry(1, 1, 1);
-const floorMaterial = new THREE.MeshStandardMaterial({ color: "#134e4a" });
+const floorMaterial = new THREE.MeshStandardMaterial({ color: "#fbbf24" });
 const obstacleMaterial = new THREE.MeshStandardMaterial({ color: "black" });
 
 const BlockStart = ({ position = [0, 0, 0], canJump }) => (
