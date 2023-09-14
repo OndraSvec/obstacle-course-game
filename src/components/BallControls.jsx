@@ -103,7 +103,7 @@ const BallControls = ({ ballRef }) => {
     ballRef.current?.applyImpulse(impulse);
     ballRef.current?.applyTorqueImpulse(torque);
   });
-  return <></>;
+  return null;
 };
 
 export default BallControls;

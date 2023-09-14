@@ -114,7 +114,7 @@ const CharacterControls = ({
       characterRef.current.rotation.y = angle;
     }
   });
-  return <></>;
+  return null;
 };
 
 export default CharacterControls;

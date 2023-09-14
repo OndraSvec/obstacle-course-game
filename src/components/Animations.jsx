@@ -10,7 +10,7 @@ const Animations = ({ animationName, player, characterRef }) => {
 
     return () => action.fadeOut(0.125);
   }, [animationName]);
-  return <></>;
+  return null;
 };
 
 export default Animations;

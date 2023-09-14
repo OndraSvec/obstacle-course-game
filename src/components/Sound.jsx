@@ -10,7 +10,7 @@ const Sound = () => {
 
     return () => backgroundMusic.pause();
   }, [sound]);
-  return <></>;
+  return null;
 };
 
 export default Sound;
