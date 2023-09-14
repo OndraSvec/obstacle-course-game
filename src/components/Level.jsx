@@ -19,7 +19,7 @@ const BlockStart = ({ position = [0, 0, 0], canJump }) => (
       <mesh
         geometry={boxGeometry}
         material={obstacleMaterial}
-        scale={[4, 0.2, 4]}
+        scale={[4, 0.2, 6]}
         position-y={-0.1}
         receiveShadow
       />
@@ -42,7 +42,7 @@ const BlockEnd = ({ position = [0, 0, 0] }) => (
     <mesh
       geometry={boxGeometry}
       material={obstacleMaterial}
-      scale={[4, 0.2, 4]}
+      scale={[4, 0.2, 6]}
       position-y={-0.1}
       receiveShadow
     />
@@ -76,7 +76,7 @@ const BlockSpinner = ({ position = [0, 0, 0], canJump }) => {
         <mesh
           geometry={boxGeometry}
           material={floorMaterial}
-          scale={[4, 0.2, 4]}
+          scale={[4, 0.2, 6]}
           position-y={-0.1}
           receiveShadow
         />
@@ -137,7 +137,7 @@ const BlockDoubleSpinner = ({ position = [0, 0, 0], canJump }) => {
         <mesh
           geometry={boxGeometry}
           material={floorMaterial}
-          scale={[4, 0.2, 4]}
+          scale={[4, 0.2, 6]}
           position-y={-0.1}
           receiveShadow
         />
@@ -202,7 +202,7 @@ const BlockVertical = ({ position = [0, 0, 0], canJump }) => {
         <mesh
           geometry={boxGeometry}
           material={floorMaterial}
-          scale={[4, 0.2, 4]}
+          scale={[4, 0.2, 6]}
           position-y={-0.1}
           receiveShadow
         />
@@ -252,7 +252,7 @@ const BlockHorizontal = ({ position = [0, 0, 0], canJump }) => {
         <mesh
           geometry={boxGeometry}
           material={floorMaterial}
-          scale={[4, 0.2, 4]}
+          scale={[4, 0.2, 6]}
           position-y={-0.1}
           receiveShadow
         />
@@ -303,7 +303,7 @@ const BlockRotating = ({ position = [0, 0, 0], canJump }) => {
         <mesh
           geometry={boxGeometry}
           material={floorMaterial}
-          scale={[4, 0.2, 4]}
+          scale={[4, 0.2, 6]}
           position-y={-0.1}
           receiveShadow
         />
@@ -382,7 +382,7 @@ const BlockGate = ({ position = [0, 0, 0], canJump }) => {
         <mesh
           geometry={boxGeometry}
           material={floorMaterial}
-          scale={[4, 0.2, 4]}
+          scale={[4, 0.2, 6]}
           position-y={-0.1}
           receiveShadow
         />
@@ -437,7 +437,7 @@ const BlockHorizontalSwing = ({ position = [0, 0, 0], canJump }) => {
         <mesh
           geometry={boxGeometry}
           material={floorMaterial}
-          scale={[4, 0.2, 4]}
+          scale={[4, 0.2, 6]}
           position-y={-0.1}
           receiveShadow
         />
@@ -492,7 +492,7 @@ const BlockVerticalSwing = ({ position = [0, 0, 0], canJump }) => {
         <mesh
           geometry={boxGeometry}
           material={floorMaterial}
-          scale={[4, 0.2, 4]}
+          scale={[4, 0.2, 6]}
           position-y={-0.1}
           receiveShadow
         />
@@ -532,11 +532,11 @@ const Level = ({
       {blocks.map((Block, index) => (
         <Block
           key={`block_${index}`}
-          position={[0, 0, (index + 1) * -4]}
+          position={[0, 0, (index + 1) * -6]}
           canJump={canJump}
         />
       ))}
-      <BlockEnd position={[0, 0, (count + 1) * -4]} />
+      <BlockEnd position={[0, 0, (count + 1) * -6]} />
     </>
   );
 };
