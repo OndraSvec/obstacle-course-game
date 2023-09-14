@@ -46,9 +46,9 @@ const BlockEnd = ({ position = [0, 0, 0] }) => (
       position-y={-0.1}
       receiveShadow
     />
-    <CuboidCollider args={[2, 1, 0.15]} position={[0, 1, -2.15]} />
-    <CuboidCollider args={[0.15, 1, 2]} position={[-2.15, 1, 0]} />
-    <CuboidCollider args={[0.15, 1, 2]} position={[2.15, 1, 0]} />
+    <CuboidCollider args={[2, 1, 0.15]} position={[0, 1, -3.15]} />
+    <CuboidCollider args={[0.15, 1, 3]} position={[-2.15, 1, 0]} />
+    <CuboidCollider args={[0.15, 1, 3]} position={[2.15, 1, 0]} />
   </RigidBody>
 );
 
