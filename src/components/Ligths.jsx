@@ -15,7 +15,7 @@ const Lights = () => {
         ref={lightRef}
         castShadow
         position={[4, 4, 1]}
-        intensity={1.5}
+        intensity={3}
         shadow-mapSize={[1024, 1024]}
         shadow-camera-near={1}
         shadow-camera-far={10}
