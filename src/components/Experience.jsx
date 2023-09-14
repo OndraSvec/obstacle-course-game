@@ -10,7 +10,6 @@ import Sound from "./Sound";
 
 const Experience = () => {
   const blocksCount = useGameStore((state) => state.blocksCount);
-  const blocksSeed = useGameStore((state) => state.blocksSeed);
   const character = useGameStore((state) => state.character);
 
   const canJump = useRef(true);
@@ -19,7 +18,7 @@ const Experience = () => {
       <Sky sunPosition={[0, 3, 2]} />
       <Physics>
         <Lights />
-        <Level count={blocksCount} seed={blocksSeed} canJump={canJump} />
+        <Level count={blocksCount} canJump={canJump} />
         {character ? <Character canJump={canJump} /> : <Ball />}
       </Physics>
       <Sound />

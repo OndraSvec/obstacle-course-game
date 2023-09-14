@@ -6,7 +6,6 @@ export default create(
     persist(
       (set) => ({
         blocksCount: 5,
-        blocksSeed: 0,
 
         level: 1,
 
@@ -22,12 +21,10 @@ export default create(
           }),
         restart: () =>
           set((state) => {
-            if (state.phase === "playing")
-              return { phase: "ready", blocksSeed: Math.random() };
+            if (state.phase === "playing") return { phase: "ready" };
             else if (state.phase === "ended") {
               return {
                 phase: "ready",
-                blocksSeed: Math.random(),
                 blocksCount: (state.blocksCount += 2),
                 level: (state.level += 1),
                 bestScore:

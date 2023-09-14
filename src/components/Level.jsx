@@ -513,7 +513,6 @@ const Level = ({
     BlockHorizontalSwing,
     BlockVerticalSwing,
   ],
-  seed = 0,
   canJump,
 }) => {
   const blocks = useMemo(() => {
@@ -525,7 +524,7 @@ const Level = ({
     }
 
     return blocks;
-  }, [count, types, seed]);
+  }, [count]);
   return (
     <>
       <BlockStart position={[0, 0, 0]} canJump={canJump} />
