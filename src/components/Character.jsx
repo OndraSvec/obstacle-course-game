@@ -41,7 +41,7 @@ const Character = ({ canJump }) => {
     state.camera.lookAt(lerpedCameraTarget);
 
     if (
-      playerPosition.z < -blocksCount * 4 - 2 &&
+      playerPosition.z < -blocksCount * 6 - 3 &&
       playerPosition.y >= 0 &&
       playerPosition.x >= -2 &&
       playerPosition.x <= 2
