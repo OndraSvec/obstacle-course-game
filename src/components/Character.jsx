@@ -40,7 +40,13 @@ const Character = ({ canJump }) => {
     state.camera.position.copy(lerpedCameraPosition);
     state.camera.lookAt(lerpedCameraTarget);
 
-    if (playerPosition.z < -blocksCount * 4 - 2 && playerPosition.y >= 0) end();
+    if (
+      playerPosition.z < -blocksCount * 4 - 2 &&
+      playerPosition.y >= 0 &&
+      playerPosition.x >= -2 &&
+      playerPosition.x <= 2
+    )
+      end();
     playerPosition.y < -3 && restart();
   });
   return (

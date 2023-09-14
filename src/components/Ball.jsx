@@ -33,7 +33,13 @@ const Ball = () => {
     state.camera.position.copy(lerpedCameraPosition);
     state.camera.lookAt(lerpedCameraTarget);
 
-    if (ballPosition.z < -blocksCount * 4 - 2 && ballPosition.y >= 0) end();
+    if (
+      ballPosition.z < -blocksCount * 4 - 2 &&
+      ballPosition.y >= 0 &&
+      ballPosition.x >= -2 &&
+      ballPosition.x <= 2
+    )
+      end();
     ballPosition.y < -3 && restart();
   });
   return (
