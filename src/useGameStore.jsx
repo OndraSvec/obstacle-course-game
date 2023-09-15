@@ -5,12 +5,18 @@ export default create(
   subscribeWithSelector(
     persist(
       (set) => ({
-        blocksCount: 5,
+        blocksCount:
+          JSON.parse(localStorage.getItem("gameStorage"))?.state.blocksCount ||
+          5,
 
-        level: 1,
+        level:
+          JSON.parse(localStorage.getItem("gameStorage"))?.state.level || 1,
 
         bestScore:
           JSON.parse(localStorage.getItem("gameStorage"))?.state.bestScore || 1,
+
+        startOver: () =>
+          set(() => ({ blocksCount: 5, level: 1, bestScore: 1 })),
 
         phase: "ready",
         start: () =>
@@ -76,6 +82,8 @@ export default create(
         name: "gameStorage",
         partialize: (state) => ({
           bestScore: state.bestScore,
+          level: state.level,
+          blocksCount: state.blocksCount,
         }),
       },
     ),

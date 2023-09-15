@@ -3,6 +3,7 @@ import Experience from "./components/Experience";
 import Interface from "./components/Interface";
 import { KeyboardControls, Loader, useProgress } from "@react-three/drei";
 import { Suspense, forwardRef, useEffect, useRef, useState } from "react";
+import Menu from "./components/Menu";
 
 const Wrapper = forwardRef(({ children }, ref) => (
   <div ref={ref}>{children}</div>
@@ -12,6 +13,7 @@ const App = () => {
   const wrapperRef = useRef(null);
 
   const [isMobileDevice, setIsMobileDevice] = useState(true);
+  const [menuVisible, setMenuVisible] = useState(true);
 
   const handleFullScreen = () => {
     const fullscreenElement =
@@ -88,7 +90,12 @@ const App = () => {
           }}
           dataStyles={{ color: "black", fontSize: "1rem" }}
         />
-        {progress === 100 && <Interface isMobileDevice={isMobileDevice} />}
+        {progress === 100 && (
+          <>
+            {menuVisible && <Menu setMenuVisible={setMenuVisible} />}
+            <Interface isMobileDevice={isMobileDevice} />
+          </>
+        )}
       </KeyboardControls>
     </Wrapper>
   );
