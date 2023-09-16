@@ -15,8 +15,7 @@ export default create(
         bestScore:
           JSON.parse(localStorage.getItem("gameStorage"))?.state.bestScore || 1,
 
-        startOver: () =>
-          set(() => ({ blocksCount: 5, level: 1, bestScore: 1 })),
+        startOver: () => set(() => ({ blocksCount: 5, level: 1 })),
 
         phase: "ready",
         start: () =>
