@@ -92,7 +92,12 @@ const App = () => {
         />
         {progress === 100 && (
           <>
-            {menuVisible && <Menu setMenuVisible={setMenuVisible} />}
+            {menuVisible && (
+              <Menu
+                setMenuVisible={setMenuVisible}
+                isMobileDevice={isMobileDevice}
+              />
+            )}
             <Interface isMobileDevice={isMobileDevice} />
           </>
         )}
